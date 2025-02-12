@@ -1,0 +1,73 @@
+body{
+    background-color: black;
+    color: white;
+}
+
+.containerheader{
+    top: 0;
+    width: 100%;
+    max-height: 230px;
+    overflow: hidden;
+}
+
+
+#imagemheader{
+    width: 100%;
+    cursor:block;
+    
+}
+
+
+.text-overlay {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    font-size: 34px;
+    animation: ChangeColor 5s infinite;
+    border: 2px solid white;
+    height: 100px; 
+    line-height: 100px;
+}
+
+
+@keyframes ChangeColor {
+    0% {
+        border-color: rgb(37, 124, 255);
+    }
+    50% {
+        border-color: rgb(23, 24, 92);
+    }
+    70% {
+        border-color: rgb(57, 180, 0);
+    }
+
+    100% {
+        border-color: rgb(66, 79, 201);
+    }
+}
+
+
+
+.logincadastrocontainer{
+    display: flex;
+    justify-content: space-between;
+    width: 15%;
+    position: absolute;
+    
+}
+
+.Login{
+background-color: transparent;
+border-color: transparent ;
+color: white;
+cursor: pointer;
+}
+
+.Cadastro{
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
