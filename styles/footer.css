@@ -1,0 +1,20 @@
+.containerfooter{
+    
+    bottom: 0;
+    background-color: rgb(14, 13, 13);
+    margin-top: 20px;
+}
+
+
+.footer__content__imagem #imagem__footer{
+    max-width: 900px;
+    max-height:150px;
+    width: auto;
+    height: auto;
+    padding-left: 20px;
+    padding-top: 20px;
+}
+
+.footer__content__text p{
+  border: solid black;
+}

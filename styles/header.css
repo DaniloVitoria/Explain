@@ -10,7 +10,9 @@ body{
     overflow: hidden;
 }
 
-
+.navheadercontainer{
+    overflow: hidden;
+}
 #imagemheader{
     width: 100%;
     cursor:block;
@@ -48,6 +50,7 @@ body{
         border-color: rgb(66, 79, 201);
     }
 }
+
 
 
 
