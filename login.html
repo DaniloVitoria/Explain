@@ -3,21 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login</title>
     <link rel="stylesheet" href="./styleslogin/body.css">
 </head>
 <body>
-    
-
     <main>
         <div class="containermain">
             <div class="content">
-                <input type="text" class="login" placeholder="login" />
-                <input type="text" class="senha" placeholder="senha" />
-                <input type="button" class="enviar" value="submit" />
+                <input type="text" class="login" placeholder="Login" />
+                <input type="password" class="senha" placeholder="Senha" />
+                <input type="button" class="enviar" value="Submit" onclick="login()" />
             </div>
         </div>
-
     </main>
+
+    <script>
+        function setCookie(name, value, days) {
+            const d = new Date();
+            d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+            const expires = "expires=" + d.toUTCString();
+            document.cookie = name + "=" + value + ";" + expires + ";path=/";
+        }
+
+        async function login() {
+            const username = document.querySelector('.login').value;
+            const password = document.querySelector('.senha').value;
+            try {
+                const response = await fetch('http://localhost:3000/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const result = await response.json();
+                if (result.success) {
+                    setCookie('isLoggedIn', 'true', 1); // Armazena o estado de login em um cookie por 1 dia
+                    setCookie('username', username, 1); // Armazena o nome de usuário em um cookie por 1 dia
+                    setCookie('nome', result.nome, 1); // Armazena o nome em um cookie por 1 dia
+                    alert('Login bem-sucedido!');
+                    window.location.href = 'index.html'; // Redirecionar para a página principal
+                } else {
+                    alert('Usuário ou senha incorretos!');
+                }
+            } catch (error) {
+                alert('Erro ao tentar fazer login. Por favor, tente novamente.');
+                console.error('Erro:', error);
+            }
+        }
+    </script>
 </body>
 </html>

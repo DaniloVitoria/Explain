@@ -11,20 +11,22 @@
 <body>
     
     <div class="containerheader">
-        <div class="logincadastrocontainer">
-            <a href="./login.html" target="_blank" >
-                <button class="Login">Login</button>
-            </a>
-            <a href="./stylescadastro/body.css" target="_blank">
-                <button class="Cadastro">Cadastro</button>
-            </a>
-        </div>
+        
         <nav class="navheader">
 
             <div class="navheadercontainer">
             
-                <img id="imagemheader" src="assets/Tematica.jpg" alt="">
-            <span class="text-overlay">Núcleo de sonho</span>
+                <div id="imagemheader" class="imagemheader"> 
+                    <div class="logincadastrocontainer">
+                        <a href="./login.html" target="_blank" >
+                            <button class="Login">Login</button>
+                        </a>
+                        <a href="./cadastro.html" target="_blank">
+                            <button class="Cadastro">Cadastro</button>
+                        </a>
+                    </div>
+                    <span class="text-overlay">Núcleo de sonho</span></div>
+           
        
 
             </div>
@@ -101,6 +103,14 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Seção de comentários -->
+            <div class="comments-section">
+                <h2>Comentários</h2>
+                <div id="comments"></div>
+                <textarea id="commentText" placeholder="Escreva seu comentário aqui..."></textarea>
+                <button onclick="submitComment()">Enviar Comentário</button>
+            </div>
         </main>
     </div>
 
@@ -122,5 +132,76 @@
         </div>
     </footer>
 
+    <script>
+        let isLoggedIn = false; // Variável para verificar se o usuário está logado
+
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+
+        async function checkLogin() {
+            // Verifique se o usuário está logado (isso pode ser feito com cookies, localStorage, etc.)
+            // Aqui, estamos apenas simulando a verificação de login
+            isLoggedIn = getCookie('isLoggedIn') === 'true';
+        }
+
+        async function submitComment() {
+            if (!isLoggedIn) {
+                alert('Você precisa estar logado para comentar.');
+                return;
+            }
+
+            const commentText = document.getElementById('commentText').value;
+            const username = getCookie('username');
+            if (!commentText) {
+                alert('Por favor, escreva um comentário.');
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:3000/comment', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ comment: commentText, username })
+                });
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const result = await response.text();
+                alert(result);
+                loadComments(); // Recarregar os comentários após enviar um novo comentário
+            } catch (error) {
+                alert('Erro ao tentar enviar comentário. Por favor, tente novamente.');
+                console.error('Erro:', error);
+            }
+        }
+
+        async function loadComments() {
+            try {
+                const response = await fetch('http://localhost:3000/comments');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const comments = await response.json();
+                const commentsDiv = document.getElementById('comments');
+                commentsDiv.innerHTML = '';
+                comments.forEach(comment => {
+                    const commentElement = document.createElement('p');
+                    commentElement.textContent = `${comment.username}: ${comment.text}`;
+                    commentsDiv.appendChild(commentElement);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar comentários:', error);
+            }
+        }
+
+        // Verificar login e carregar comentários ao carregar a página
+        checkLogin();
+        loadComments();
+    </script>
 </body>
 </html>

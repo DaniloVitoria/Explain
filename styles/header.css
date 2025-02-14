@@ -13,16 +13,21 @@ body{
 .navheadercontainer{
     overflow: hidden;
 }
-#imagemheader{
+
+.imagemheader{
+    background-image: url(../assets/Tematica.jpg);
+    background-repeat: repeat;
+    background-position: center;
     width: 100%;
-    cursor:block;
+    height: 230px; 
+    position: relative;
     
 }
 
 
 .text-overlay {
     position: absolute;
-    top: 15%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
     color: rgb(255, 255, 255);
@@ -67,6 +72,7 @@ background-color: transparent;
 border-color: transparent ;
 color: white;
 cursor: pointer;
+
 }
 
 .Cadastro{
